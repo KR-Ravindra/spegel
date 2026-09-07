@@ -180,6 +180,8 @@ spegel:
   containerdRegistryConfigPath: "/etc/containerd/certs.d"
   # -- Path to Containerd content store..
   containerdContentPath: "/var/lib/containerd/io.containerd.content.v1.content"
+  # -- Path to Containerd config file to check for discard_unpacked_layers configuration.
+  containerdConfigPath: "/etc/containerd/config.toml"
   # -- If true Spegel will add mirror configuration to the node.
   containerdMirrorAdd: true
   # -- When true Spegel will resolve tags to digests.

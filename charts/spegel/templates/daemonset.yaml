@@ -172,6 +172,11 @@ spec:
           {{- end }}
           {{- if .Values.spegel.persistence.enabled }}
           - name: spegel-data
+          {{- with .Values.spegel.containerdConfigPath }}
+          - name: containerd-config-file
+            mountPath: {{ . }}
+            readOnly: true
+          {{- end }}
             mountPath: {{ .Values.spegel.persistence.path }}
           {{- end }}
           - name: containerd-sock
@@ -201,6 +206,12 @@ spec:
             type: Socket
         {{- with .Values.spegel.containerdContentPath }}
         - name: containerd-content
+        {{- with .Values.spegel.containerdConfigPath }}
+        - name: containerd-config-file
+          hostPath:
+            path: {{ . }}
+            type: FileOrExist
+        {{- end }}
           hostPath:
             path: {{ . }}
             type: Directory

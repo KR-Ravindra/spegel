@@ -176,6 +176,17 @@ func registryCommand(ctx context.Context, args *RegistryCmd) error {
 		return err
 	}
 
+	// Check containerd configuration for garbage collection support
+	containerdConfigPath := os.Getenv(preflight.ContainerdConfigPath)
+	if containerdConfigPath == "" {
+		// Default to standard path if env var not set
+		containerdConfigPath = preflight.DefaultContainerdConfigPath
+	}
+	err = preflight.CheckContainerdConfig(containerdConfigPath)
+	if err != nil {
+		return fmt.Errorf("containerd configuration check failed: %w", err)
+	}
+
 	ociClient, err := oci.NewClient()
 	if err != nil {
 		return err
